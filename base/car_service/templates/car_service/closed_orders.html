@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Закрытые заказы{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Закрытые заказы</h2>
+
+{% if closed_services %}
+<div class="d-flex flex-wrap">
+    {% for service in closed_services %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ service.car_model }}</h5>
+            <p class="card-text">
+                <strong>Дата:</strong> {{ service.service_date }}<br>
+                <strong>Описание:</strong> {{ service.description }}<br>
+                <strong>Мастер:</strong> {{ service.mechanic.first_name }} {{ service.mechanic.last_name }}<br>
+                <small>({{ service.mechanic.specialty }})</small>
+            </p>
+            <a href="{% url 'service_detail' service.id %}" class="btn btn-primary btn-sm">Подробнее</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="alert alert-info">Нет закрытых заказов</p>
+{% endif %}
+{% endblock %}
